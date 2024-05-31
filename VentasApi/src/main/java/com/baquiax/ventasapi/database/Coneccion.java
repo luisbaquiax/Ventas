@@ -31,14 +31,6 @@ public class Coneccion {
         } catch (SQLException e) {
             System.err.println("Error al conectarse a la base de datos: " + e.getMessage());
             e.printStackTrace();
-        } finally {
-            if (CONECCION != null) {
-                try {
-                    CONECCION.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 

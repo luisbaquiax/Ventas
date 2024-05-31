@@ -41,7 +41,7 @@ public class ClienteDb {
         }
     }
 
-    public List<Cliente> getVentas() {
+    public List<Cliente> getClientes() {
         List<Cliente> list = new ArrayList<>();
         try {
             PreparedStatement statement = Coneccion.getConnection().prepareStatement(SELECT);

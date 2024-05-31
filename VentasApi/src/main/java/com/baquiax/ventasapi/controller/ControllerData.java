@@ -4,6 +4,10 @@
  */
 package com.baquiax.ventasapi.controller;
 
+import com.baquiax.ventasapi.database.VentaDb;
+import com.baquiax.ventasapi.model.Datos;
+import com.baquiax.ventasapi.model.Venta;
+import com.baquiax.ventasapi.objetos.JsonConverter;
 import jakarta.servlet.annotation.WebServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +16,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  *
@@ -20,7 +28,12 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet(name = "ControllerData", urlPatterns = {"/ControllerData"})
 public class ControllerData extends HttpServlet {
 
-    
+    JsonConverter converter;
+
+
+    public ControllerData() {
+        this.converter = new JsonConverter();
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -34,6 +47,10 @@ public class ControllerData extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (request.getParameter("tarea").equals("ventas")) {
+            VentaDb ventasDb = new VentaDb();
+            response.getWriter().write(converter.toJson(ventasDb.getVentas()));
+        }
     }
 
     /**
@@ -47,7 +64,22 @@ public class ControllerData extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    }
 
+        if (request.getParameter("tarea").equals("subir")) {
+
+            Part partes = request.getPart("archivo");
+            InputStream inputStream = partes.getInputStream();
+            //procesar datos
+            Datos datos = new Datos();
+            datos.manejoDatos(inputStream);
+
+            response.setStatus(HttpServletResponse.SC_CREATED);
+            response.setContentType("application/json");
+
+            //mensaje
+            response.getWriter().print("{\"message\": \"Se ha leido el contendio del archivo y subido el contenido del archivo\"}");
+        }
+
+    }
 
 }
