@@ -19,7 +19,10 @@ export class VentaComponent implements OnInit {
   unidadesVendidas: number = 0;
 
   constructor(private http: HttpClient, private serviceVenta: VentasService) {
-   
+    this.serviceVenta.getVentas().subscribe((lista) => {
+      this.ventas = lista;
+    });
+    this.setNumbers();
   }
 
   ngOnInit(): void {
@@ -36,6 +39,7 @@ export class VentaComponent implements OnInit {
   subirDatos() {
     console.log('hola sendfile');
     if (!this.file) {
+      this.menssage = 'Debes elegir el archivo antes de subir los datos';
       return;
     }
 
@@ -46,19 +50,17 @@ export class VentaComponent implements OnInit {
       this.menssage = 'Se ha procesado correctamente el archivo.';
       console.log('Se ha enviado el archivo. ', response);
     });
-
   }
 
-  setNumbers(){
+  setNumbers() {
     this.unidadesVendidas = 0;
-    this.ventas.forEach(element => {
+    this.ventas.forEach((element) => {
       this.unidadesVendidas += element.cantidad;
     });
     this.cantidadVentas = this.ventas.length;
   }
 
-  verDatos(){
+  verDatos() {
     this.setNumbers();
   }
-
 }
