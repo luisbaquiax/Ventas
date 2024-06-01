@@ -33,8 +33,9 @@ public class Coneccion {
             }
         } catch (SQLException e) {
             System.err.println("Error al conectarse a la base de datos: " + e.getMessage());
-        } catch (ClassNotFoundException e) {
             Logger.getLogger(Coneccion.class.getName()).log(Level.SEVERE, null, e);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Coneccion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -26,6 +26,12 @@ public class ClienteDb {
             + "FROM [test].[Clientes] \n"
             + "ORDER BY [Clientes].id_cliente DESC;";
 
+    /**
+     * Insert a new Customer into table Clientes
+     *
+     * @param cliente
+     * @return
+     */
     public boolean insert(Cliente cliente) {
         try {
             PreparedStatement statement = Coneccion.getConnection().prepareStatement(INSERT);
@@ -39,6 +45,12 @@ public class ClienteDb {
             return false;
         }
     }
+
+    /**
+     * Return a list of Customers
+     *
+     * @return
+     */
     public List<Cliente> getClientes() {
         List<Cliente> list = new ArrayList<>();
         try {

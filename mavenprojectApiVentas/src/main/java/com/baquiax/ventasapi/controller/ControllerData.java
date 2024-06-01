@@ -4,23 +4,24 @@
  */
 package com.baquiax.ventasapi.controller;
 
+import com.baquiax.ventasapi.database.ClienteDb;
 import com.baquiax.ventasapi.database.VentaDb;
 import com.baquiax.ventasapi.model.Datos;
 import com.baquiax.ventasapi.model.Venta;
 import com.baquiax.ventasapi.objetos.JsonConverter;
-import jakarta.servlet.annotation.WebServlet;
+import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import javax.servlet.annotation.MultipartConfig;
 
 /**
  *
@@ -31,9 +32,13 @@ import java.io.InputStreamReader;
 public class ControllerData extends HttpServlet {
 
     JsonConverter converter;
+    VentaDb ventasDb;
+    ClienteDb clienteDb;
 
     public ControllerData() {
         this.converter = new JsonConverter();
+        this.ventasDb = new VentaDb();
+        this.clienteDb = new ClienteDb();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -48,10 +53,12 @@ public class ControllerData extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("hola get");
         if (request.getParameter("tarea").equals("ventas")) {
-            VentaDb ventasDb = new VentaDb();
+            //response.getWriter().write(converter.toJson(clienteDb.getClientes()));
             response.getWriter().write(converter.toJson(ventasDb.getVentas()));
         }
+
     }
 
     /**
@@ -65,7 +72,8 @@ public class ControllerData extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //partes, archivos adjutos en la petición httpd
+        System.out.println("hola post");
+
         Part partes = request.getPart("archivo");
         InputStream inputStream = partes.getInputStream();
         //procesar datos

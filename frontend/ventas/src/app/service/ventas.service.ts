@@ -7,8 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class VentasService {
-  url: String =
-    'http://localhost:8080/VentasApi-1.0-SNAPSHOT/ControllerData?tarea=';
+  url: String = 'http://localhost:8080/VentasApi/ControllerData?tarea=';
 
   constructor(private http: HttpClient) {}
 

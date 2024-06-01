@@ -10,8 +10,7 @@ import { Venta } from 'src/app/objetos/Venta';
 })
 export class VentaComponent implements OnInit {
   file: File | undefined;
-  url: string =
-    'http://localhost:8080/VentasApi-1.0-SNAPSHOT/ControllerData?tarea=subir';
+  url: string = 'http://localhost:8080/VentasApi/ControllerData';
   menssage: String = '';
 
   ventas: Venta[] = [];
@@ -20,12 +19,15 @@ export class VentaComponent implements OnInit {
   unidadesVendidas: number = 0;
 
   constructor(private http: HttpClient, private serviceVenta: VentasService) {
+   
+  }
+
+  ngOnInit(): void {
     this.serviceVenta.getVentas().subscribe((lista) => {
       this.ventas = lista;
     });
+    this.setNumbers();
   }
-
-  ngOnInit(): void {}
 
   chooseFile(event: any) {
     this.file = event.target.files[0];
@@ -44,13 +46,19 @@ export class VentaComponent implements OnInit {
       this.menssage = 'Se ha procesado correctamente el archivo.';
       console.log('Se ha enviado el archivo. ', response);
     });
+
   }
 
   setNumbers(){
+    this.unidadesVendidas = 0;
     this.ventas.forEach(element => {
       this.unidadesVendidas += element.cantidad;
     });
     this.cantidadVentas = this.ventas.length;
+  }
+
+  verDatos(){
+    this.setNumbers();
   }
 
 }

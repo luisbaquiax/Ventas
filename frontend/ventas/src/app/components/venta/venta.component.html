@@ -18,6 +18,9 @@
         <button type="button" class="btn btn-primary" (click)="subirDatos()">
           Subir datos
         </button>
+        <button type="button" class="btn btn-primary ms-3" (click)="verDatos()">
+            Ver datos
+          </button>
       </form>
     </div>
   </div>
@@ -25,20 +28,20 @@
 <hr />
 <div class="container text-center">
   <div class="row">
-        <div class="col-md-3">
-          <div class="card text-center bg-warning text-white mb-3">
-            <div class="card-body">
-              <h3>Cantidad de ventas</h3>
-              <h4 class="display-4">{{cantidadVentas}}</h4>
-            </div>
-          </div>
+    <div class="col-md-3">
+      <div class="card text-center bg-warning text-white mb-3">
+        <div class="card-body">
+          <h3>Cantidad de ventas</h3>
+          <h4 class="display-4">{{ cantidadVentas }}</h4>
+        </div>
+      </div>
 
-          <div class="card text-center bg-success text-white mb-3">
-            <div class="card-body">
-              <h3>Unidades vendidas</h3>
-              <h4 class="display-4">{{unidadesVendidas}}</h4>
-            </div>
-          </div>
+      <div class="card text-center bg-success text-white mb-3">
+        <div class="card-body">
+          <h3>Unidades vendidas</h3>
+          <h4 class="display-4">{{ unidadesVendidas }}</h4>
+        </div>
+      </div>
     </div>
   </div>
 </div>
